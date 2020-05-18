@@ -46,10 +46,10 @@ type MimiPayNotifyResult struct {
 // https://mimipay.cc/document/pay
 // outTradeNo + round(price*100) + round(realPrice*100) + secret
 func (this *MimiPay) makeResultSign(price float64, realPrice float64, outTradeNo string) (r string) {
-	iPrice := int(price * 100)
+	iPrice := round(price * 100)
 	ssPrice := fmt.Sprintf("%v", iPrice)
 
-	iRealPrice := int(realPrice * 100)
+	iRealPrice := round(realPrice * 100)
 	ssRealPrice := fmt.Sprintf("%v", iRealPrice)
 
 	ss := outTradeNo + ssPrice + ssRealPrice + this.Secret

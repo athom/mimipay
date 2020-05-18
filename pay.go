@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"net/http"
 	"strings"
 	"time"
@@ -107,7 +108,7 @@ func NewMimiPay(userKey string, secret string, notifyURL string) (r *MimiPay) {
 func (this *MimiPay) makeRequestSign(price float64, payType string, orderId string, notifyURL string) (r string) {
 	pt := mimiPayType(payType)
 	payTypeStr := fmt.Sprintf("%v", pt)
-	iPrice := int(price * 100)
+	iPrice := round(price * 100)
 	ssPrice := fmt.Sprintf("%v", iPrice)
 	ss := this.UserKey + ssPrice + payTypeStr + orderId + notifyURL + this.Secret
 	r = MD5WithLowerCase(ss)
@@ -181,4 +182,8 @@ func (this *MimiPay) MakeOrderToMimiPay(productName string, payType string, orde
 		return
 	}
 	return
+}
+
+func round(x float64) int {
+	return int(math.Floor(x + 0.5))
 }
