@@ -174,7 +174,6 @@ func (this *MimiPay) MakeOrderToMimiPay(productName string, payType string, orde
 		if strings.Contains(err.Error(), `invalid character '<' looking for beginning of value`) {
 			return
 		}
-		panic(err)
 		return
 	}
 	if !r.Success {
